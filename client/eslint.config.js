@@ -38,7 +38,7 @@ export default [
   },
   {
     files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
-    ignores: ['eslint.config.js', 'dist'],
+    ignores: ['eslint.config.js', 'dist', 'node_modules/**'],
     languageOptions: {
       parser,
       parserOptions: {
