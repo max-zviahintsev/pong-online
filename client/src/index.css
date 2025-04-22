@@ -5,3 +5,30 @@ body {
   justify-content: center;
   background-color: rgba(241, 229, 197, 1);
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.result-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: rgb(180, 41, 17);
+}
+
+.result-button {
+  font-size: 18px;
+  padding: 5px 10px;
+  background-color: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out;
+}
+.result-button:hover {
+  box-shadow: 3px 6px 5px rgba(0, 0, 0, 0.6);
+}
