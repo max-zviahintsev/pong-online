@@ -34,3 +34,5 @@ export const WINNER = {
   COMPUTER: 'You died',
   PLAYER: 'You win',
 }
+
+export const URL = 'ws://localhost:8080/'

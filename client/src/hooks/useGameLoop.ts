@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { useSetAtom } from 'jotai'
-import { tickGameAtom } from '../store/derived-atoms/tick-game-atom'
-import { useGameOver } from '../store/hooks'
+import { useGameOver, useTickGame } from '../store/hooks'
 
 export function useGameLoop() {
   const frameRef = useRef<number>(0)
-  const tickGame = useSetAtom(tickGameAtom)
+  const tickGame = useTickGame()
   const isGameOver = useGameOver()
 
   useEffect(() => {

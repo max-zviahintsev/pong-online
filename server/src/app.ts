@@ -1,7 +1,7 @@
 import { fastify, FastifyInstance } from 'fastify'
 import websocket from '@fastify/websocket'
 import { Server, IncomingMessage, ServerResponse } from 'node:http'
-import { wsTestRoute } from './routes/ws-test.route.ts'
+import { gameRoute } from './modules/game/game.route.ts'
 
 const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({
   logger: {
@@ -11,10 +11,10 @@ const app: FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({
   },
 })
 
-app.register(websocket)
+await app.register(websocket)
 
 // ROUTES
-await app.register(wsTestRoute)
+await app.register(gameRoute)
 
 app.get('/ping', async () => 'pong\n')
 

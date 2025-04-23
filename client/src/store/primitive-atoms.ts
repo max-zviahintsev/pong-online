@@ -20,3 +20,5 @@ export const computerSpeedAtom = atom(c.COMPUTER_SPEED)
 
 export const isGameOverAtom = atom(false)
 export const winnerAtom = atom('')
+
+export const wsAtom = atom<WebSocket | null>(null)

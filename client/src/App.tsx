@@ -1,4 +1,4 @@
-import { useWebSocket } from './hooks/useWebSocket'
+import { useEffect } from 'react'
 import { Stage, Layer, Rect, Line } from 'react-konva'
 import { useGameLoop } from './hooks/useGameLoop'
 import useCursorPosition from './hooks/useCursorPosition'
@@ -9,60 +9,49 @@ import PaddleBottom from './components/PaddleBottom'
 import ComputerScore from './components/ComputerScore'
 import PlayerScore from './components/PlayerScore'
 import GameOver from './components/GameOver'
-import { useGameOver } from './store/hooks'
+import { useGameOver, useInitWebsocket } from './store/hooks'
 
 function App() {
   useGameLoop()
   useCursorPosition()
   const isGameOver = useGameOver()
+  const initWebSocket = useInitWebsocket()
 
-  const socket = useWebSocket('ws://localhost:8080/ws-test-route')
-
-  const sendMessage = () => {
-    if (socket.current?.readyState === WebSocket.OPEN) {
-      socket.current.send('Ping from client!')
-    }
-  }
+  useEffect(() => {
+    initWebSocket()
+  }, [initWebSocket])
 
   if (isGameOver) {
     return <GameOver />
   }
 
   return (
-    <>
-      <Stage
-        id='game-canvas'
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-        style={{ cursor: 'none' }}
-      >
-        <Layer>
-          <Rect
-            id='background'
-            x={0}
-            y={0}
-            width={CANVAS_WIDTH}
-            height={CANVAS_HEIGHT}
-            fill='rgb(26, 24, 24)'
-          />
-        </Layer>
+    <Stage id='game-canvas' width={CANVAS_WIDTH} height={CANVAS_HEIGHT} style={{ cursor: 'none' }}>
+      <Layer>
+        <Rect
+          id='background'
+          x={0}
+          y={0}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          fill='rgb(26, 24, 24)'
+        />
+      </Layer>
 
-        <Layer>
-          <PaddleTop />
+      <Layer>
+        <PaddleTop />
 
-          <ComputerScore />
+        <ComputerScore />
 
-          <Line points={MIDDLE_LINE} stroke='grey' strokeWidth={2} dash={LINE_DASH} />
+        <Line points={MIDDLE_LINE} stroke='grey' strokeWidth={2} dash={LINE_DASH} />
 
-          <PlayerScore />
+        <PlayerScore />
 
-          <PaddleBottom />
+        <PaddleBottom />
 
-          <Ball />
-        </Layer>
-      </Stage>
-      <button onClick={sendMessage}>Send Ping</button>
-    </>
+        <Ball />
+      </Layer>
+    </Stage>
   )
 }
 
