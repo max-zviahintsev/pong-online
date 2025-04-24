@@ -1,12 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useSetPaddleBottomX, useSetPlayerMoved, useWebSocket } from '../store/hooks'
-import {
-  CANVAS_WIDTH,
-  PADDLE_WIDTH,
-  PADDLE_CENTER,
-  THROTTLE_INTERVAL_MS,
-  MIN_PIXEL_DELTA,
-} from '../shared/constants'
+import { PADDLE_CENTER, THROTTLE_INTERVAL_MS, MIN_PIXEL_DELTA } from '../shared/constants'
+import { calculatePosition } from '../shared/utils'
 
 function useCursorPosition() {
   const setPaddleBottomX = useSetPaddleBottomX()
@@ -23,10 +18,8 @@ function useCursorPosition() {
 
       const bounds = canvas.getBoundingClientRect()
       const relativeX = event.clientX - bounds.left
-
-      let paddlePosition = relativeX - PADDLE_CENTER
-
-      paddlePosition = Math.max(0, Math.min(paddlePosition, CANVAS_WIDTH - PADDLE_WIDTH))
+      const x = relativeX - PADDLE_CENTER
+      const paddlePosition = calculatePosition(x)
 
       setPaddleBottomX(paddlePosition)
 

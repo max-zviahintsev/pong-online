@@ -26,9 +26,6 @@ export const SPEED_Y_MEDIUM = -3
 export const SPEED_LIMIT = 5
 export const TRAJECTORY_MULTIPLIER = 0.3
 
-export const COMPUTER_SPEED = 3
-export const COMPUTER_SPEED_FAST = 6
-
 export const WINNING_SCORE = 7
 export const WINNER = {
   COMPUTER: 'You died',

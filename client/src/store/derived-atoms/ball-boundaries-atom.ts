@@ -8,7 +8,6 @@ import {
   paddleContactAtom,
   paddleTopXAtom,
   paddleBottomXAtom,
-  computerSpeedAtom,
   computerScoreAtom,
   playerScoreAtom,
 } from '../primitive-atoms'
@@ -18,7 +17,6 @@ import {
   CANVAS_HEIGHT,
   PADDLE_CENTER,
   PADDLE_WIDTH,
-  COMPUTER_SPEED_FAST,
   SPEED_LIMIT,
   TRAJECTORY_MULTIPLIER,
 } from '../../shared/constants'
@@ -50,7 +48,6 @@ export const ballBoundariesAtom = atom(null, (get, set) => {
         // Max Speed
         if (speedY < -SPEED_LIMIT) {
           set(speedYAtom, -SPEED_LIMIT)
-          set(computerSpeedAtom, COMPUTER_SPEED_FAST)
         }
       }
       set(speedYAtom, (prev) => -prev)

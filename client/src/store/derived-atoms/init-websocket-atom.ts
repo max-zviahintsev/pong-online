@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
-import { wsAtom, isGameStartedAtom, playerIdAtom } from '../primitive-atoms'
+import { wsAtom, isGameStartedAtom, playerIdAtom, paddleTopXAtom } from '../primitive-atoms'
 import { URL } from '../../shared/constants'
+import { calculatePosition } from '../../shared/utils'
 
 export const initWebSocketAtom = atom(null, (get, set) => {
   if (get(wsAtom)) return // already connected
@@ -16,6 +17,10 @@ export const initWebSocketAtom = atom(null, (get, set) => {
     if (message.type === 'game_start') {
       set(isGameStartedAtom, message.payload.isGameStarted)
       set(playerIdAtom, message.payload.clientId)
+    }
+
+    if (message.type === 'top_paddle_position') {
+      set(paddleTopXAtom, calculatePosition(message.payload.x))
     }
   }
 
