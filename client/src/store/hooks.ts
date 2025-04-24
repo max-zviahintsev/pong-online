@@ -9,6 +9,7 @@ import {
   playerMovedAtom,
   isGameOverAtom,
   winnerAtom,
+  wsAtom,
 } from './primitive-atoms'
 import { newGameAtom } from './derived-atoms/game-over-atoms'
 import { tickGameAtom } from './derived-atoms/tick-game-atom'
@@ -32,3 +33,4 @@ export const useWinner = () => useAtomValue(winnerAtom)
 export const useNewGame = () => useSetAtom(newGameAtom)
 
 export const useInitWebsocket = () => useSetAtom(initWebSocketAtom)
+export const useWebSocket = () => useAtomValue(wsAtom)

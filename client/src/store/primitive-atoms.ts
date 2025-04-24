@@ -22,3 +22,5 @@ export const isGameOverAtom = atom(false)
 export const winnerAtom = atom('')
 
 export const wsAtom = atom<WebSocket | null>(null)
+export const isGameStartedAtom = atom(false)
+export const playerIdAtom = atom(null)

@@ -35,4 +35,7 @@ export const WINNER = {
   PLAYER: 'You win',
 }
 
+export const THROTTLE_INTERVAL_MS = 20
+export const MIN_PIXEL_DELTA = 2
+
 export const URL = 'ws://localhost:8080/'

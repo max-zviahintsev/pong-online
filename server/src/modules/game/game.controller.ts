@@ -1,8 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
 import { WebSocket } from 'ws'
-import { safeSend } from '../../utils/safe-send.ts'
+import { broadcastStartGame, broadcastPaddlePosition } from '../../utils/send.ts'
+import { Clients } from './types.ts'
 
-const clients = new Map<string, WebSocket>()
+const clients: Clients = new Map()
 
 const handleGameRoute = (socket: WebSocket) => {
   const clientId = uuidv4()
@@ -11,13 +12,16 @@ const handleGameRoute = (socket: WebSocket) => {
   console.log(`Client connected: ${clientId}`)
 
   if (clients.size > 1) {
-    const data = JSON.stringify({
-      isGameStarted: true,
-      clientId,
-    })
-
-    safeSend(socket, data)
+    broadcastStartGame(clients)
   }
+
+  socket.on('message', (data) => {
+    const parsed = JSON.parse(data.toString())
+
+    if (parsed?.type === 'paddle_position') {
+      broadcastPaddlePosition(clientId, clients, parsed)
+    }
+  })
 
   socket.on('close', () => {
     console.log(`Client disconnected: ${clientId}`)

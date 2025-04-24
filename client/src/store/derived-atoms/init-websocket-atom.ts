@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { wsAtom } from '../primitive-atoms'
+import { wsAtom, isGameStartedAtom, playerIdAtom } from '../primitive-atoms'
 import { URL } from '../../shared/constants'
 
 export const initWebSocketAtom = atom(null, (get, set) => {
@@ -8,6 +8,17 @@ export const initWebSocketAtom = atom(null, (get, set) => {
   const ws = new WebSocket(URL)
 
   ws.onopen = () => console.log('[WebSocket] Connected')
+
+  ws.onmessage = (event) => {
+    const message = JSON.parse(event.data)
+    console.log('[WebSocket] Message received:', message)
+
+    if (message.type === 'game_start') {
+      set(isGameStartedAtom, message.payload.isGameStarted)
+      set(playerIdAtom, message.payload.clientId)
+    }
+  }
+
   ws.onclose = () => console.log('[WebSocket] Disconnected')
   ws.onerror = (err) => console.error('[WebSocket] Error', err)
 
